@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Link Generator</title>
+  </head>
+  <body>
+    <h1>Generate a Secure Course Link</h1>
+
+    <!-- Form to enter email and course ID -->
+    <form id="linkForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+      <br />
+      <label for="course_path">Course ID:</label>
+      <input type="text" id="course_path" name="course_path" required />
+      <br />
+      <button type="submit">Generate Link</button>
+    </form>
+
+    <!-- Placeholder for the generated link -->
+    <p id="dynamic-link"></p>
+
+    <script>
+      // Handle form submission
+      document
+        .getElementById("linkForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent the form from submitting the traditional way
+
+          const formData = new FormData(this); // Get form data
+          const email = formData.get("email");
+          const courseId = formData.get("course_path");
+
+          // Send form data to the server to generate the link
+          fetch("/generate-link", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(formData).toString(),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Display the generated link
+              const linkElement = document.getElementById("dynamic-link");
+              linkElement.innerHTML = `<a href="${data.redirectUrl}" target="_blank">Go to Course</a>`;
+            })
+            .catch((error) => {
+              console.error("Error generating the link:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
