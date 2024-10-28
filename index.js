@@ -35,7 +35,7 @@ app.post("/generate-link", (req, res) => {
   const generatedSignature = hmac.digest("hex"); // Finalize the HMAC to get the signature
 
   // Construct the final redirect URL with the course path
-  const redirectUrl = `http://localhost:5001/${course_path}?${urlParams}&signature=${generatedSignature}`;
+  const redirectUrl = `https://quality.whizlabs.org/${course_path}?${urlParams}&signature=${generatedSignature}`;
 
   // Send the generated URL as a response
   res.json({ redirectUrl });
