@@ -41,8 +41,13 @@ app.post("/generate-link", (req, res) => {
   res.json({ redirectUrl });
 });
 
-// Start the server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Export the app as a serverless function
+module.exports = app;
+
+// If you want to run it locally
+if (require.main === module) {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
