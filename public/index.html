@@ -13,8 +13,11 @@
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required />
       <br />
-      <label for="course_path">Course ID:</label>
+      <label for="course_path">Course path:</label>
       <input type="text" id="course_path" name="course_path" required />
+      <br />
+      <label for="course_id">Course ID:</label>
+      <input type="text" id="course_id" name="course_id" required />
       <br />
       <button type="submit">Generate Link</button>
     </form>
@@ -30,8 +33,9 @@
           e.preventDefault(); // Prevent the form from submitting the traditional way
 
           const formData = new FormData(this); // Get form data
-          const email = formData.get("email");
-          const courseId = formData.get("course_path");
+          formData.get("email");
+          formData.get("course_path");
+          formData.get("course_id");
 
           // Send form data to the server to generate the link
           fetch("/generate-link", {
