@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Route to generate the signed link based on form data
 app.post("/generate-link", (req, res) => {
-  const { email, course_path } = req.body; // Using course_path from request body
+  const { email, course_path, course_id } = req.body; // Using course_path from request body
   const referer = "whizlabs";
 
   if (!email || !course_path) {
@@ -26,7 +26,9 @@ app.post("/generate-link", (req, res) => {
   // Prepare URL parameters string
   const urlParams = `email=${encodeURIComponent(
     email
-  )}&referer=${encodeURIComponent(referer)}`;
+  )}&referer=${encodeURIComponent(referer)}&courseId=${encodeURIComponent(
+    course_id
+  )}`;
 
   // Generate HMAC using SHA-256
   const encryptData = `${email}${referer}`;
